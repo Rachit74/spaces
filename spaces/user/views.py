@@ -35,7 +35,7 @@ def user_login_view(request):
             if user is not None:
                 login(request, user)
                 print("User Logged in")
-                return redirect('profile')
+                return redirect('workspace_home')
     else:
         form = UserLoginForm
 
