@@ -35,7 +35,7 @@ def user_login_view(request):
             if user is not None:
                 login(request, user)
                 print("User Logged in")
-                return redirect('home')
+                return redirect('profile')
     else:
         form = UserLoginForm
 
@@ -44,3 +44,17 @@ def user_login_view(request):
     }
 
     return render(request, 'user/login.html', context=context)
+
+def user_logout_view(request):
+    logout(request)
+    return redirect('login')
+
+def user_profile_view(request):
+    user = request.user
+    context = {
+        'user': user,
+    }
+    if user is not None:
+        return render(request, 'user/profile.html', context=context)
+    else:
+        return redirect('login')
