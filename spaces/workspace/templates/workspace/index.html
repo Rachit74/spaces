@@ -1,17 +1,39 @@
 {% extends 'user/base.html' %}
 
-{% block title %} Spaces | Home {% endblock %}
+{% block title %}Spaces | Home{% endblock %}
 
 {% block content %}
+<div class="container mt-4">
+    {% if user.is_authenticated %}
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Welcome, {{ user.username }}!</h2>
+            <a href="{% url 'create_workspace' %}" class="btn btn-primary">Create Workspace</a>
+        </div>
 
-{% if user.is_authenticated %}
-
-workspace home
-
-{% else %}
-
-
-
-{% endif %}
-
+        {% if user_workspaces %}
+            <div class="row">
+                {% for workspace in user_workspaces %}
+                    <div class="col-md-4 mb-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ workspace.name }}</h5>
+                                <p class="card-text">{{ workspace.description|default:"No description available." }}</p>
+                                <a href="#" class="btn btn-outline-primary btn-sm">View Workspace</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="text-muted">You have not joined or created any workspaces yet.</p>
+        {% endif %}
+    {% else %}
+        <div class="text-center my-5">
+            <h1>Welcome to Spaces!</h1>
+            <p class="lead">A platform to collaborate and manage your workspaces with ease.</p>
+            <a href="{% url 'login' %}" class="btn btn-primary me-2">Login</a>
+            <a href="{% url 'register' %}" class="btn btn-outline-secondary">Register</a>
+        </div>
+    {% endif %}
+</div>
 {% endblock %}
