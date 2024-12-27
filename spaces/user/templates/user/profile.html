@@ -13,27 +13,26 @@
     <div class="col-md-8">
         <!-- Right Column -->
         <h3>Spaces Created</h3>
-        <div class="row">
-            <!-- Dummy spaces created by the user -->
-            <div class="col-md-6">
-                <div class="card mb-3">
-                    <div class="card-body">
-                        <h5 class="card-title">Space 1</h5>
-                        <p class="card-text">Description of Space 1</p>
-                        <a href="#" class="btn btn-primary">View</a>
+        {% if user_spaces %}
+            {% for workspace in user_spaces %}
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ workspace.name }}</h5>
+                            <p class="card-text">{{ workspace.description }}</p>
+                            <span class="muted-text">{{ workspace.members.count }} members</span>
+                            <p></p>
+                            <a href="#" class="btn btn-primary">View</a>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
-                <div class="card mb-3">
-                    <div class="card-body">
-                        <h5 class="card-title">Space 2</h5>
-                        <p class="card-text">Description of Space 2</p>
-                        <a href="#" class="btn btn-primary">View</a>
-                    </div>
-                </div>
-            </div>
-        </div>
+            {% endfor %}
+        {% else %}
+            no workspace yet
+        {% endif %}        
+            
     </div>
 </div>
 {% endblock %}

@@ -3,6 +3,8 @@ from django.http import HttpResponse
 from .forms import UserRegistrationForm, UserLoginForm
 from django.contrib.auth import login, authenticate, logout
 
+from workspace.models import Workspace
+
 # Create your views here.
 def home(request):
     return HttpResponse("Hi")
@@ -51,8 +53,10 @@ def user_logout_view(request):
 
 def user_profile_view(request):
     user = request.user
+    user_spaces = Workspace.objects.filter(creator=user)
     context = {
         'user': user,
+        'user_spaces': user_spaces,
     }
     if user is not None:
         return render(request, 'user/profile.html', context=context)

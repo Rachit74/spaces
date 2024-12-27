@@ -18,6 +18,8 @@
                             <div class="card-body">
                                 <h5 class="card-title">{{ workspace.name }}</h5>
                                 <p class="card-text">{{ workspace.description|default:"No description available." }}</p>
+                                <span class="text-muted">created by: {{ workspace.creator }}</span>
+                                <p></p>
                                 <a href="#" class="btn btn-outline-primary btn-sm">View Workspace</a>
                             </div>
                         </div>
