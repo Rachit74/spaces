@@ -1,4 +1,6 @@
 from django.shortcuts import render, HttpResponse, redirect, get_object_or_404
+from django.http import HttpResponseForbidden
+
 
 from .forms import WorkspaceCreationForm
 from .models import Workspace
@@ -46,3 +48,15 @@ def delete_workspace(request, workspace_id):
         workspace.delete()
 
     return redirect('profile')
+
+def workspace_view(request, workspace_id):
+    workspace = get_object_or_404(Workspace, id=workspace_id)
+    user = request.user
+
+    if user in workspace.members.all() or workspace.creator == user:
+        context = {
+            'workspace': workspace,
+        }
+        return render(request, 'workspace/workspace.html', context=context)
+    else:
+        return HttpResponseForbidden("You are not authorized to view this workspace.")

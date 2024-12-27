@@ -1,0 +1,15 @@
+{% extends 'user/base.html' %}
+
+{% block content %}
+<h1>{{ workspace.name }}</h1>
+<p>{{ workspace.description }}</p>
+<p>Created by: {{ workspace.creator.username }}</p>
+<p>Members:</p>
+<ul>
+    {% for member in workspace.members.all %}
+        <li>{{ member.username }}</li>
+    {% empty %}
+        <li>No members</li>
+    {% endfor %}
+</ul>
+{% endblock %}
