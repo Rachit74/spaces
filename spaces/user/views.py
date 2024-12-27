@@ -16,7 +16,7 @@ def user_register_view(request):
             user = form.save(commit=False)
             user.save()
             login(request, user)
-            return redirect('home')
+            return redirect('workspace_home')
     else:
         form = UserRegistrationForm
     

@@ -1,4 +1,4 @@
-from django.shortcuts import render, HttpResponse, redirect
+from django.shortcuts import render, HttpResponse, redirect, get_object_or_404
 
 from .forms import WorkspaceCreationForm
 from .models import Workspace
@@ -24,6 +24,9 @@ def create_workspace(request):
             workspace.creator = request.user
             workspace.save()
 
+            # many to many field needs extra care
+            form.save_m2m()
+
             return redirect('workspace_home')
     else:
         form = WorkspaceCreationForm
@@ -32,3 +35,14 @@ def create_workspace(request):
         'form': form
     }
     return render(request, 'workspace/create.html', context=context)
+
+def delete_workspace(request, workspace_id):
+    workspace = get_object_or_404(Workspace, id=workspace_id)
+    user = request.user
+
+    if workspace.creator != user:
+        pass
+    else:
+        workspace.delete()
+
+    return redirect('profile')

@@ -24,6 +24,7 @@
                             <span class="muted-text">{{ workspace.members.count }} members</span>
                             <p></p>
                             <a href="#" class="btn btn-primary">View</a>
+                            <a href="{% url 'delete_workspace' workspace.id %}" class="btn btn-danger">Delete</a>
                         </div>
                     </div>
                 </div>
