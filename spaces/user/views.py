@@ -4,6 +4,7 @@ from .forms import UserRegistrationForm, UserLoginForm
 from django.contrib.auth import login, authenticate, logout
 
 from workspace.models import Workspace
+from .models import Profile
 
 # Create your views here.
 def home(request):
@@ -15,6 +16,8 @@ def user_register_view(request):
         if form.is_valid():
             user = form.save(commit=False)
             user.save()
+            profile = Profile.objects.create(user=user)
+            profile.save()
             login(request, user)
             return redirect('workspace_home')
     else:

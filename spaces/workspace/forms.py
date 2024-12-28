@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 
 
 class WorkspaceCreationForm(forms.ModelForm):
+    # forms.ModelMultipleChoiceField for choosing multiple members at once, will be changed to show only users that current user follows.
     members = forms.ModelMultipleChoiceField(
         queryset=User.objects.all(),  # Fetch all users
         widget=forms.CheckboxSelectMultiple,  # Allows multiple selections with checkboxes
