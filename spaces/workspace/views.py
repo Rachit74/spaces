@@ -1,6 +1,8 @@
 from django.shortcuts import render, HttpResponse, redirect, get_object_or_404
 from django.http import HttpResponseForbidden
 
+from django.db.models import Q
+
 
 from .forms import WorkspaceCreationForm
 from .models import Workspace
@@ -8,7 +10,7 @@ from .models import Workspace
 # Create your views here.
 def workspace_home(request):
     if request.user.is_authenticated:
-        user_workspaces = Workspace.objects.filter(creator=request.user)
+        user_workspaces = Workspace.objects.filter(Q(creator=request.user) | Q(members=request.user))
     else:
         user_workspaces = []  # Empty list for unauthenticated users
 

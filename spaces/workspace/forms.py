@@ -24,4 +24,5 @@ class WorkspaceCreationForm(forms.ModelForm):
 
         if user:
             # Set the queryset to the users followed by the logged-in user
-            self.fields['members'].queryset = user.profile.follows.all()
+            # only the users whose profile is in current user follows
+            self.fields['members'].queryset = User.objects.filter(profile__in=user.profile.follows.all())

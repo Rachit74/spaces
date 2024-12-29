@@ -20,7 +20,7 @@
                                 <p class="card-text">{{ workspace.description|default:"No description available." }}</p>
                                 <span class="text-muted">created by: {{ workspace.creator }}</span>
                                 <p></p>
-                                <a href="#" class="btn btn-outline-primary btn-sm">View Workspace</a>
+                                <a href="{% url 'workspace_view' workspace.id%}" class="btn btn-outline-primary btn-sm">View Workspace</a>
                             </div>
                         </div>
                     </div>
