@@ -7,4 +7,4 @@ class Profile(models.Model):
     follows = models.ManyToManyField("self", related_name="followed_by", symmetrical=True, blank=True)
 
     def __str__(self):
-        return f'{self.user.username} profile'
+        return self.user.username

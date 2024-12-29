@@ -20,19 +20,18 @@ def workspace_home(request):
 
 def create_workspace(request):
     if request.method == 'POST':
-        form = WorkspaceCreationForm(request.POST)
+        form = WorkspaceCreationForm(request.POST, user=request.user)  # Pass user explicitly
         if form.is_valid():
             workspace = form.save(commit=False)
-            workspace.creator = request.user
+            workspace.creator = request.user  # Assign creator if applicable
             workspace.save()
 
-            # many to many field needs extra care
-            # we need to use .save_m2m() function to save any many to many relation that are filled in form
+            # Save many-to-many relationships
             form.save_m2m()
 
-            return redirect('workspace_home')
+            return redirect('workspace_home')  # Redirect to workspace home
     else:
-        form = WorkspaceCreationForm
+        form = WorkspaceCreationForm(user=request.user)  # Pass user explicitly
 
     context = {
         'form': form

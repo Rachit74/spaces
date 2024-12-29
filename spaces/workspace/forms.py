@@ -4,11 +4,10 @@ from django.contrib.auth.models import User
 
 
 class WorkspaceCreationForm(forms.ModelForm):
-    # forms.ModelMultipleChoiceField for choosing multiple members at once, will be changed to show only users that current user follows.
     members = forms.ModelMultipleChoiceField(
-        queryset=User.objects.all(),  # Fetch all users
-        widget=forms.CheckboxSelectMultiple,  # Allows multiple selections with checkboxes
-        required=False,  # Optional field
+        queryset=User.objects.none(),  # Default to an empty queryset
+        widget=forms.CheckboxSelectMultiple,
+        required=False,
         label="Members"
     )
 
@@ -16,5 +15,13 @@ class WorkspaceCreationForm(forms.ModelForm):
         model = Workspace
         fields = ['name', 'description', 'members']
         widgets = {
-            'description': forms.Textarea(attrs={'rows': 3, 'cols': 40}),  # Adjust textarea size
+            'description': forms.Textarea(attrs={'rows': 3, 'cols': 40}),
         }
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)  # Extract the user from kwargs
+        super().__init__(*args, **kwargs)  # Call the parent constructor
+
+        if user:
+            # Set the queryset to the users followed by the logged-in user
+            self.fields['members'].queryset = user.profile.follows.all()
