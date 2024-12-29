@@ -1,10 +1,11 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from .forms import UserRegistrationForm, UserLoginForm
 from django.contrib.auth import login, authenticate, logout
 
 from workspace.models import Workspace
 from .models import Profile
+from django.contrib.auth.models import User
 
 # Create your views here.
 def home(request):
@@ -54,12 +55,13 @@ def user_logout_view(request):
     logout(request)
     return redirect('login')
 
-def user_profile_view(request):
-    user = request.user
+def user_profile_view(request, user_id):
+    user = get_object_or_404(User, id=user_id)
     user_spaces = Workspace.objects.filter(creator=user)
     context = {
         'user': user,
         'user_spaces': user_spaces,
+        'current_user': request.user,
     }
     if user is not None:
         return render(request, 'user/profile.html', context=context)

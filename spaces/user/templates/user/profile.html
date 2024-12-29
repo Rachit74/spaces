@@ -36,7 +36,9 @@
                             <span class="muted-text">{{ workspace.members.count }} members</span>
                             <p></p>
                             <a href="{% url 'workspace_view' workspace.id %}" class="btn btn-primary">View</a>
+                            {% if workspace.creator == current_user %}
                             <a href="{% url 'delete_workspace' workspace.id %}" class="btn btn-danger">Delete</a>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
