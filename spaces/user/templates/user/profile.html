@@ -9,26 +9,15 @@
         <h3>Profile Details</h3>
         <p><strong>Username:</strong> {{ user.username }}</p>
         <p><strong>Email:</strong> {{ user.email }}</p>
-        <h4>Followers</h4>
-        {% if user.profile.followers.all %}
+        <h4>Follows</h4>
+        {% if user.profile.follows.all %}
             <ul>
-                {% for follower in user.profile.followers.all %}
-                    <li>{{ follower.username }}</li>
+                {% for profile in user.profile.follows.all %}
+                    <li>{{ profile.user.username }}</li>
                 {% endfor %}
             </ul>
         {% else %}
-            <p>No followers yet</p>
-        {% endif %}
-        
-        <h4>Following</h4>
-        {% if user.following.all %}
-            <ul>
-                {% for following in user.following.all %}
-                    <li>{{ following.user.username }}</li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <p>Not following anyone yet</p>
+            <p>No User added yet</p>
         {% endif %}
     </div>
 

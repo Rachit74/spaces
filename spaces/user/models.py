@@ -4,4 +4,7 @@ from django.contrib.auth.models import User
 # Create your models here.
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    followers = models.ManyToManyField(User, related_name='following', symmetrical=False)
+    follows = models.ManyToManyField("self", related_name="followed_by", symmetrical=True, blank=True)
+
+    def __str__(self):
+        return f'{self.user.username} profile'
