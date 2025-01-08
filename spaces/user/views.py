@@ -55,13 +55,12 @@ def user_logout_view(request):
     logout(request)
     return redirect('login')
 
-def user_profile_view(request, user_id):
-    user = get_object_or_404(User, id=user_id)
+def user_profile_view(request):
+    user = request.user
     user_spaces = Workspace.objects.filter(creator=user)
     context = {
         'user': user,
         'user_spaces': user_spaces,
-        'current_user': request.user,
     }
     if user is not None:
         return render(request, 'user/profile.html', context=context)
