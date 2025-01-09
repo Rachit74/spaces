@@ -76,6 +76,6 @@ def user_search(request):
     users = None
 
     if query:
-        users = User.objects.filter(username__icontains=query)
+        users = User.objects.filter(username__icontains=query).exclude(id=request.user.id)
 
-    return render(request, 'user/search_page.html', {'users': users, 'query': query})
+    return render(request, 'user/search_page.html', {'users': users, 'query': query, 'current_user': request.user})
