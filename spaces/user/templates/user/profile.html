@@ -19,6 +19,7 @@
         {% else %}
             <p>No User added yet</p>
         {% endif %}
+        <a href="{% url 'search' %}">Find users to follow</a>
     </div>
 
     </div>
@@ -27,6 +28,31 @@
         <h3>Spaces Created</h3>
         {% if user_spaces %}
             {% for workspace in user_spaces %}
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ workspace.name }}</h5>
+                            <p class="card-text">{{ workspace.description }}</p>
+                            <span class="muted-text">{{ workspace.members.count }} members</span>
+                            <p></p>
+                            <a href="{% url 'workspace_view' workspace.id %}" class="btn btn-primary">View</a>
+                            {% if workspace.creator == current_user %}
+                            <a href="{% url 'delete_workspace' workspace.id %}" class="btn btn-danger">Delete</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            no workspace created yet
+        {% endif %}
+
+        <hr>
+        <h3>Spaces Member of</h3>
+        {% if spaces_member %}
+            {% for workspace in spaces_member %}
             <div class="row">
                 <div class="col-md-6">
                     <div class="card mb-3">

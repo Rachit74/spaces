@@ -7,6 +7,8 @@ from workspace.models import Workspace
 from .models import Profile
 from django.contrib.auth.models import User
 
+from django.db.models import Q
+
 # Create your views here.
 def home(request):
     return HttpResponse("Hi")
@@ -58,11 +60,22 @@ def user_logout_view(request):
 def user_profile_view(request):
     user = request.user
     user_spaces = Workspace.objects.filter(creator=user)
+    spaces_member = Workspace.objects.filter(Q(members=user))
     context = {
         'user': user,
         'user_spaces': user_spaces,
+        'spaces_member': spaces_member,
     }
     if user is not None:
         return render(request, 'user/profile.html', context=context)
     else:
         return redirect('login')
+    
+def user_search(request):
+    query = request.GET.get('query', '').strip()
+    users = None
+
+    if query:
+        users = User.objects.filter(username__icontains=query)
+
+    return render(request, 'user/search_page.html', {'users': users, 'query': query})
