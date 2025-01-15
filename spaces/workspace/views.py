@@ -67,3 +67,13 @@ def workspace_view(request, workspace_id):
     else:
         # Forbid outsiders to visit the workspace
         return HttpResponseForbidden("You are not authorized to view this workspace.")
+    
+
+def workspace_discussion(request, workspace_id):
+    workspace = get_object_or_404(Workspace, id=workspace_id)
+
+    context = {
+        'workspace': workspace,
+    }
+
+    return render(request, 'workspace/discuss.html', context=context)

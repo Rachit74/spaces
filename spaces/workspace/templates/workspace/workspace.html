@@ -4,6 +4,7 @@
 <h1>{{ workspace.name }}</h1>
 <p>{{ workspace.description }}</p>
 <p>Created by: {{ workspace.creator.username }}</p>
+<a href="{% url 'workspace_discussion' workspace.id %}">workspace discussion</a>
 <p>Members:</p>
 <ul>
     {% for member in workspace.members.all %}
