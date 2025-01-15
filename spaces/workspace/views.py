@@ -100,3 +100,12 @@ def discussion_topic_form(request, workspace_id):
         }
 
         return render(request, 'workspace/topic_form.html', context=context)
+    
+def post_view(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+
+    context = {
+        'post': post,
+    }
+
+    return render(request, 'workspace/post.html', context=context)

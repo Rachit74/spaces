@@ -15,7 +15,7 @@
     <div class="list-group">
         {% for post in posts %}
             <div class="list-group-item">
-                <h5 class="mb-1">{{ post.title }}</h5>
+                <a href="{% url 'post' post.id %}"><h5 class="mb-1">{{ post.title }}</h5></a>
                 <p class="mb-1 text-muted">
                     <strong>Author:</strong> {{ post.author }} | 
                     <strong>Posted on:</strong> {{ post.created_at|date:"d M Y, H:i" }}
