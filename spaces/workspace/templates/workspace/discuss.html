@@ -1,8 +1,32 @@
 {% extends "user/base.html" %}
 
-
 {% block title %} {{ workspace.name }} | Discussion {% endblock %}
 
 {% block content %}
-    <h3>{{ workspace.name }} Discussion page</h3>
+<div class="container mt-4">
+    <!-- Workspace Title -->
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h3>{{ workspace.name }} Discussion Page</h3>
+        <a href="{% url 'topic_form' workspace.id %}" class="btn btn-primary">New Topic</a>
+    </div>
+    <hr>
+
+    <!-- Posts Section -->
+    <div class="list-group">
+        {% for post in posts %}
+            <div class="list-group-item">
+                <h5 class="mb-1">{{ post.title }}</h5>
+                <p class="mb-1 text-muted">
+                    <strong>Author:</strong> {{ post.author }} | 
+                    <strong>Posted on:</strong> {{ post.created_at|date:"d M Y, H:i" }}
+                </p>
+                <p>{{ post.content }}</p>
+            </div>
+        {% empty %}
+            <div class="alert alert-warning" role="alert">
+                No posts available. Be the first to start a discussion!
+            </div>
+        {% endfor %}
+    </div>
+</div>
 {% endblock %}

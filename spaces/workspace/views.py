@@ -4,8 +4,8 @@ from django.http import HttpResponseForbidden
 from django.db.models import Q
 
 
-from .forms import WorkspaceCreationForm
-from .models import Workspace
+from .forms import WorkspaceCreationForm, PostCreationForm
+from .models import Workspace, Post, Comment
 
 # Create your views here.
 def workspace_home(request):
@@ -71,9 +71,32 @@ def workspace_view(request, workspace_id):
 
 def workspace_discussion(request, workspace_id):
     workspace = get_object_or_404(Workspace, id=workspace_id)
+    posts = Post.objects.filter(workspace=workspace)
 
     context = {
         'workspace': workspace,
+        'posts': posts,
     }
 
     return render(request, 'workspace/discuss.html', context=context)
+
+
+def discussion_topic_form(request, workspace_id):
+    workspace = get_object_or_404(Workspace, id=workspace_id)
+    if request.method == "POST":
+        form = PostCreationForm(request.POST)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.workspace = workspace
+            post.author = request.user
+            post.save()
+            return redirect('workspace_discussion', workspace_id=workspace_id)
+
+    else:
+        form = PostCreationForm()
+        context = {
+            'workspace': workspace,
+            'form': form
+        }
+
+        return render(request, 'workspace/topic_form.html', context=context)

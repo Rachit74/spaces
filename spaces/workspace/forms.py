@@ -1,5 +1,5 @@
 from django import forms
-from .models import Workspace
+from .models import Workspace, Post, Comment
 from django.contrib.auth.models import User
 
 
@@ -26,3 +26,8 @@ class WorkspaceCreationForm(forms.ModelForm):
             # Set the queryset to the users followed by the logged-in user
             # only the users whose profile is in current user follows
             self.fields['members'].queryset = User.objects.filter(profile__in=user.profile.follows.all())
+
+class PostCreationForm(forms.ModelForm):
+    class Meta:
+        model = Post
+        fields = ['title', 'content']
