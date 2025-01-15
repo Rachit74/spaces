@@ -4,7 +4,7 @@ from django.http import HttpResponseForbidden
 from django.db.models import Q
 
 
-from .forms import WorkspaceCreationForm, PostCreationForm
+from .forms import WorkspaceCreationForm, PostCreationForm, CommentCreationForm
 from .models import Workspace, Post, Comment
 
 # Create your views here.
@@ -104,8 +104,22 @@ def discussion_topic_form(request, workspace_id):
 def post_view(request, post_id):
     post = get_object_or_404(Post, id=post_id)
 
+    if request.method == "POST":
+        form = CommentCreationForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.author = request.user
+            comment.post = post
+            comment.save()
+            return redirect('post', post_id=post_id)
+    else:
+        form = CommentCreationForm()
+        comments = Comment.objects.filter(post=post)
+
     context = {
+        'form': form,
         'post': post,
+        'comments': comments,
     }
 
     return render(request, 'workspace/post.html', context=context)

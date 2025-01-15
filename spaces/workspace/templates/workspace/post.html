@@ -17,16 +17,13 @@
     <h2>Comments</h2>
     <form method="POST" class="mb-4">
         {% csrf_token %}
-        <div class="mb-3">
-            <label for="comment" class="form-label">Add a comment:</label>
-            <textarea name="comment" id="comment" class="form-control" rows="3" required></textarea>
-        </div>
+        {{ form.as_p }}
         <button type="submit" class="btn btn-primary">Post Comment</button>
     </form>
 
     <div class="comments-section">
-        {% if post.comments.all %}
-            {% for comment in post.comments.all %}
+        {% if comments %}
+            {% for comment in comments %}
                 <div class="comment mb-3">
                     <p><strong>{{ comment.author }}</strong> on {{ comment.created_at|date:"M d, Y H:i" }}</p>
                     <p>{{ comment.content }}</p>
