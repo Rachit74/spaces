@@ -6,37 +6,55 @@
 
 {% block content %}
 <div class="container mt-4">
-    <h1>{{ post.title }}</h1>
-    <p class="text-muted">Posted by {{ post.author }} on {{ post.created_at|date:"M d, Y" }}</p>
-    <div class="post-content mb-4">
-        <p>{{ post.content }}</p>
-    </div>
+    <div class="row">
+        <!-- Main content column -->
+        <div class="col-md-8">
+            <div class="border-bottom pb-2 mb-4">
+                <h1 class="h3">{{ post.title }}</h1>
+                <p class="text-muted small">Posted by <strong>{{ post.author }}</strong> on {{ post.created_at|date:"M d, Y" }}</p>
+            </div>
 
-    <hr>
+            <div class="post-content mb-4 p-3 bg-white border rounded shadow-sm">
+                <p>{{ post.content }}</p>
+            </div>
 
-    <div class="comments-section">
-        {% if comments %}
-            {% for comment in comments %}
-                <div class="comment mb-3">
-                    <p><strong>{{ comment.author }}</strong> commented on {{ comment.created_at|date:"M d, Y H:i" }}</p>
-                    <p>{{ comment.content }}</p>
-                </div>
-                {% if user == comment.author %}
-                <a href="{% url 'delete_comment' comment.id %}" class="small-link-danger">Delete</a>
+            <hr>
+
+            <div class="comments-section">
+                <h5>Comments</h5>
+                {% if comments %}
+                    {% for comment in comments %}
+                        <div class="comment mb-3 p-3 bg-light border rounded">
+                            <p class="mb-1"><strong>{{ comment.author }}</strong> commented on {{ comment.created_at|date:"M d, Y H:i" }}</p>
+                            <p>{{ comment.content }}</p>
+                            {% if user == comment.author %}
+                            <a href="{% url 'delete_comment' comment.id %}" class="small text-danger">Delete</a>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p class="text-muted">No comments yet. Be the first to comment!</p>
                 {% endif %}
-                <hr>
-            {% endfor %}
-        {% else %}
-            <p>No comments yet. Be the first to comment!</p>
-        {% endif %}
-    </div>
+            </div>
 
-    <form method="POST" class="mb-4">
-        {% csrf_token %}
-        {{ form.content }}
-        <br>
-        <p></p>
-        <button type="submit" class="btn btn-success btn-sm">Comment</button>
-    </form>
+            <form method="POST" class="mb-4">
+                {% csrf_token %}
+                <textarea name="content" class="form-control form-control-sm" rows="3" placeholder="Write your comment here..."></textarea>
+                <button type="submit" class="btn btn-success btn-sm mt-2">Comment</button>
+            </form>
+        </div>
+
+        <!-- Right-hand side column for links -->
+        <div class="col-md-4">
+            <div class="p-3 bg-light border rounded">
+                <h5>Workspace Links</h5>
+                <ul class="list-unstyled">
+                    <li><a href="#" class="d-block mb-2">Back to Workspace Home</a></li>
+                    <li><a href="#" class="d-block mb-2">Workspace ToDo</a></li>
+                    <li><a href="#" class="d-block mb-2">Workspace Members</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}

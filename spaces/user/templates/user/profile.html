@@ -3,77 +3,89 @@
 {% block title %} User Profile {% endblock %}
 
 {% block content %}
-<div class="row">
-    <div class="col-md-4">
+<div class="container mt-4">
+    <div class="row">
         <!-- Left Column -->
-        <h3>Profile Details</h3>
-        <p><strong>Username:</strong> {{ user.username }}</p>
-        <p><strong>Email:</strong> {{ user.email }}</p>
-        <h4>Follows</h4>
-        {% if user.profile.follows.all %}
-            <ul>
-                {% for profile in user.profile.follows.all %}
-                    <li>{{ profile.user.username }}</li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <p>No User added yet</p>
-        {% endif %}
-        <a href="{% url 'search' %}">Find users to follow</a>
-    </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <h4 class="card-title">Profile Details</h4>
+                    <p><strong>Username:</strong> {{ user.username }}</p>
+                    <p><strong>Email:</strong> {{ user.email }}</p>
+                </div>
+            </div>
 
-    </div>
-    <div class="col-md-8">
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <h4 class="card-title">Follows</h4>
+                    {% if user.profile.follows.all %}
+                        <ul class="list-group list-group-flush">
+                            {% for profile in user.profile.follows.all %}
+                                <li class="list-group-item">{{ profile.user.username }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p class="text-muted">No users followed yet.</p>
+                    {% endif %}
+                    <a href="{% url 'search' %}" class="btn btn-link">Find users to follow</a>
+                </div>
+            </div>
+        </div>
+
         <!-- Right Column -->
-        <h3>Spaces Created</h3>
-        {% if user_spaces %}
-            {% for workspace in user_spaces %}
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ workspace.name }}</h5>
-                            <p class="card-text">{{ workspace.description }}</p>
-                            <span class="muted-text">{{ workspace.members.count }} members</span>
-                            <p></p>
-                            <a href="{% url 'workspace_view' workspace.id %}" class="btn btn-primary btn-sm">View</a>
-                            {% if workspace.creator == user %}
-                            <a href="{% url 'delete_workspace' workspace.id %}" class="btn btn-danger btn-sm">Delete</a>
-                            {% endif %}
+        <div class="col-md-8">
+            <h3>Spaces Created</h3>
+            {% if user_spaces %}
+                <div class="row">
+                    {% for workspace in user_spaces %}
+                        <div class="col-md-6 mb-4">
+                            <div class="card shadow-sm h-100">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ workspace.name }}</h5>
+                                    <p class="card-text">{{ workspace.description }}</p>
+                                    <span class="text-muted">{{ workspace.members.count }} members</span>
+                                    <div class="mt-2">
+                                        <a href="{% url 'workspace_view' workspace.id %}" class="btn btn-primary btn-sm">View</a>
+                                        {% if workspace.creator == user %}
+                                            <a href="{% url 'delete_workspace' workspace.id %}" class="btn btn-danger btn-sm">Delete</a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                    {% endfor %}
                 </div>
-            </div>
-            {% endfor %}
-        {% else %}
-            no workspace created yet
-        {% endif %}
+            {% else %}
+                <p class="text-muted">No workspaces created yet.</p>
+            {% endif %}
 
-        <hr>
-        <h3>Spaces Member of</h3>
-        {% if spaces_member %}
-            {% for workspace in spaces_member %}
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ workspace.name }}</h5>
-                            <p class="card-text">{{ workspace.description }}</p>
-                            <span class="muted-text">{{ workspace.members.count }} members</span>
-                            <p></p>
-                            <a href="{% url 'workspace_view' workspace.id %}" class="btn btn-primary btn-sm">View</a>
-                            {% if workspace.creator == user %}
-                            <a href="{% url 'delete_workspace' workspace.id %}" class="btn btn-danger btn-sm">Delete</a>
-                            {% endif %}
+            <hr>
+
+            <h3>Spaces Member of</h3>
+            {% if spaces_member %}
+                <div class="row">
+                    {% for workspace in spaces_member %}
+                        <div class="col-md-6 mb-4">
+                            <div class="card shadow-sm h-100">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ workspace.name }}</h5>
+                                    <p class="card-text">{{ workspace.description }}</p>
+                                    <span class="text-muted">{{ workspace.members.count }} members</span>
+                                    <div class="mt-2">
+                                        <a href="{% url 'workspace_view' workspace.id %}" class="btn btn-primary btn-sm">View</a>
+                                        {% if workspace.creator == user %}
+                                            <a href="{% url 'delete_workspace' workspace.id %}" class="btn btn-danger btn-sm">Delete</a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                    {% endfor %}
                 </div>
-            </div>
-            {% endfor %}
-        {% else %}
-            no workspace yet
-        {% endif %}        
-            
+            {% else %}
+                <p class="text-muted">No workspaces joined yet.</p>
+            {% endif %}
+        </div>
     </div>
 </div>
 {% endblock %}

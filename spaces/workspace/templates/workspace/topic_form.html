@@ -3,18 +3,25 @@
 {% block title %}Create Discussion Topic{% endblock %}
 
 {% block content %}
-<div class="container mt-4">
-    <div class="card shadow-sm">
-        <div class="card-header bg-primary text-white">
-            <h5 class="mb-0">Create a Discussion Topic</h5>
+<div class="container mt-5">
+    <div class="card shadow-lg">
+        <div class="card-header bg-dark text-white text-center">
+            <h4 class="mb-0">Create a New Discussion Topic</h4>
         </div>
         <div class="card-body">
             <form action="" method="POST">
                 {% csrf_token %}
-                {{ form.as_p }}
+                <div class="mb-4">
+                    <label for="id_title" class="form-label">{{ form.title.label }}</label>
+                    <input type="text" name="title" id="id_title" class="form-control" placeholder="Enter the topic title" value="{{ form.title.value|default_if_none:'' }}">
+                </div>
+                <div class="mb-4">
+                    <label for="id_content" class="form-label">{{ form.content.label }}</label>
+                    <textarea name="content" id="id_content" class="form-control" placeholder="Enter the topic content">{{ form.content.value|default_if_none:'' }}</textarea>
+                </div>
                 <div class="text-end">
-                    <button type="submit" class="btn btn-success">Submit</button>
-                    <a href="{% url 'workspace_discussion' workspace.id %}" class="btn btn-secondary">Cancel</a>
+                    <button type="submit" class="btn btn-success btn-sm me-2">Submit</button>
+                    <a href="{% url 'workspace_discussion' workspace.id %}" class="btn btn-outline-secondary btn-sm">Cancel</a>
                 </div>
             </form>
         </div>

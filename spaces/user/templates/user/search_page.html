@@ -3,24 +3,35 @@
 {% block title %} User Search {% endblock %}
 
 {% block content %}
-<h1>Search for Users</h1>
-<form method="get" action="">
-    <input type="text" name="query" placeholder="Search users..." required>
-    <button type="submit">Search</button>
-</form>
+<div class="container mt-4">
+    <h1 class="mb-4">Search for Users</h1>
 
-{% if users %}
-    <h2>Search Results:</h2>
-    <ul>
-        {% for user in users %}
-            {% if user.profile in current_user.profile.follows.all %}
-            <li>{{ user.username }} - {{ user.email }} Added | <a href="">Remove</a></li>
-            {% else %}
-            <li>{{ user.username }} - {{ user.email }} <a href="">Add</a></li>
-            {% endif %}
-        {% endfor %}
-    </ul>
-{% elif query %}
-    <p>No users found for "{{ query }}".</p>
-{% endif %}
+    <!-- Search Form -->
+    <form method="get" action="" class="mb-4 d-flex">
+        <input type="text" name="query" class="form-control me-2" placeholder="Search users..." required>
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+
+    {% if users %}
+        <h2 class="mb-3">Search Results:</h2>
+        <ul class="list-group">
+            {% for user in users %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <div>
+                        <strong>{{ user.username }}</strong> - {{ user.email }}
+                    </div>
+                    <div>
+                        {% if user.profile in current_user.profile.follows.all %}
+                            <a href="" class="btn btn-danger btn-sm">Remove</a>
+                        {% else %}
+                            <a href="" class="btn btn-success btn-sm">Add</a>
+                        {% endif %}
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    {% elif query %}
+        <p class="text-muted">No users found for "<strong>{{ query }}</strong>".</p>
+    {% endif %}
+</div>
 {% endblock %}
