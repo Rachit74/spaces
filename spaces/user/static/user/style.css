@@ -3,16 +3,3 @@
 * {
     font-family: 'IBM Plex Sans', serif;
 }
-
-/* links class style */
-.small-link-danger {
-    font-size: 14px;
-    color: red;
-    text-decoration: none;
-}
-
-.small-link-danger:hover {
-    font-size: 16px;
-    text-decoration: underline;
-    transition: .5s;
-}

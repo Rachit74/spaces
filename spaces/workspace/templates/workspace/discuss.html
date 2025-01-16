@@ -4,31 +4,48 @@
 
 {% block content %}
 <div class="container mt-4">
-    <!-- Workspace Title and New Topic Button -->
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h3 class="mb-0">{{ workspace.name }} Discussion</h3>
-        <a href="{% url 'topic_form' workspace.id %}" class="btn btn-primary btn-sm">New Topic</a>
-    </div>
-    <hr>
+    <div class="row">
+        <!-- Left Column: Discussion Posts -->
+        <div class="col-md-8">
+            <!-- Workspace Title and New Topic Button -->
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h3 class="mb-0">{{ workspace.name }} Discussion</h3>
+                <a href="{% url 'topic_form' workspace.id %}" class="btn btn-primary btn-sm">New Topic</a>
+            </div>
+            <hr>
 
-    <!-- Posts Section -->
-    <div class="list-group">
-        {% for post in posts %}
-            <div class="list-group-item list-group-item-action mb-3 p-3 bg-white border rounded shadow-sm">
-                <a href="{% url 'post' post.id %}" class="text-dark">
-                    <h5 class="mb-2">{{ post.title }}</h5>
-                </a>
-                <p class="mb-2 text-muted small">
-                    <strong>Author:</strong> {{ post.author }} | 
-                    <strong>Posted on:</strong> {{ post.created_at|date:"d M Y, H:i" }}
-                </p>
-                <p class="mb-1">{{ post.content }}</p>
+            <!-- Posts Section -->
+            <div class="list-group">
+                {% for post in posts %}
+                    <div class="list-group-item list-group-item-action mb-3 p-3 bg-white border rounded shadow-sm">
+                        <a href="{% url 'post' post.id %}" class="text-dark">
+                            <h5 class="mb-2">{{ post.title }}</h5>
+                        </a>
+                        <p class="mb-2 text-muted small">
+                            <strong>Author:</strong> {{ post.author }} | 
+                            <strong>Posted on:</strong> {{ post.created_at|date:"d M Y, H:i" }}
+                        </p>
+                        <p class="mb-1">{{ post.content }}</p>
+                    </div>
+                {% empty %}
+                    <div class="alert alert-warning text-center" role="alert">
+                        No posts available. Be the first to start a discussion!
+                    </div>
+                {% endfor %}
             </div>
-        {% empty %}
-            <div class="alert alert-warning text-center" role="alert">
-                No posts available. Be the first to start a discussion!
+        </div>
+
+        <!-- Right Column: Workspace Links -->
+        <div class="col-md-4">
+            <div class="p-3 bg-light border rounded shadow-sm">
+                <h5 class="mb-3">Workspace Links</h5>
+                <ul class="list-unstyled">
+                    <li><a href="#" class="d-block mb-2">Workspace ToDo</a></li>
+                    <li><a href="#" class="d-block mb-2">Workspace Members</a></li>
+                </ul>
             </div>
-        {% endfor %}
+        </div>
+
     </div>
 </div>
 {% endblock %}

@@ -18,6 +18,10 @@
                 <p>{{ post.content }}</p>
             </div>
 
+            {% if user == post.author %}
+            <a href="{% url 'delete_post' post.id %}" class="small text-danger">Delete Post</a>
+            {% endif %}
+
             <hr>
 
             <div class="comments-section">
@@ -49,7 +53,7 @@
             <div class="p-3 bg-light border rounded">
                 <h5>Workspace Links</h5>
                 <ul class="list-unstyled">
-                    <li><a href="#" class="d-block mb-2">Back to Workspace Home</a></li>
+                    <li><a href="{% url 'workspace_discussion' post.workspace.id %}" class="d-block mb-2">Back to Workspace Home</a></li>
                     <li><a href="#" class="d-block mb-2">Workspace ToDo</a></li>
                     <li><a href="#" class="d-block mb-2">Workspace Members</a></li>
                 </ul>

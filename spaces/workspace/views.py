@@ -133,3 +133,13 @@ def delete_comment(request, comment_id):
     else:
         comment.delete()
         return redirect('post', post_id=comment.post.id)
+    
+# Delete post view
+def delete_post(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+
+    if not request.user == post.author:
+        return HttpResponseForbidden("Forbidden")
+    else:
+        post.delete()
+        return redirect('workspace_discussion', workspace_id=post.workspace.id)
