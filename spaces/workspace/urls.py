@@ -11,4 +11,5 @@ urlpatterns = [
     path('workspace/<int:workspace_id>/topic_form', views.discussion_topic_form, name='topic_form'),
     path('post/<int:post_id>', views.post_view, name='post'),
 
+    path('delete_comment/<int:comment_id>', views.delete_comment, name='delete_comment'),
 ]

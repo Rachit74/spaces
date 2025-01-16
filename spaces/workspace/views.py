@@ -123,3 +123,13 @@ def post_view(request, post_id):
     }
 
     return render(request, 'workspace/post.html', context=context)
+
+# Delete comment view
+def delete_comment(request, comment_id):
+    comment = get_object_or_404(Comment, id=comment_id)
+
+    if not request.user == comment.author:
+        return HttpResponseForbidden("Forbidden")
+    else:
+        comment.delete()
+        return redirect('post', post_id=comment.post.id)

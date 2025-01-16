@@ -31,6 +31,7 @@ class Post(models.Model):
     # auto_now is changed whenever the recored is updated and saved again
     updated_at = models.DateTimeField(auto_now=True)
 
+
     def __str__(self):
         return self.title
 

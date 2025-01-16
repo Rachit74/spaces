@@ -14,25 +14,29 @@
 
     <hr>
 
-    <h2>Comments</h2>
-    <form method="POST" class="mb-4">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Post Comment</button>
-    </form>
-
     <div class="comments-section">
         {% if comments %}
             {% for comment in comments %}
                 <div class="comment mb-3">
-                    <p><strong>{{ comment.author }}</strong> on {{ comment.created_at|date:"M d, Y H:i" }}</p>
+                    <p><strong>{{ comment.author }}</strong> commented on {{ comment.created_at|date:"M d, Y H:i" }}</p>
                     <p>{{ comment.content }}</p>
                 </div>
+                {% if user == comment.author %}
+                <a href="{% url 'delete_comment' comment.id %}" class="small-link-danger">Delete</a>
+                {% endif %}
                 <hr>
             {% endfor %}
         {% else %}
             <p>No comments yet. Be the first to comment!</p>
         {% endif %}
     </div>
+
+    <form method="POST" class="mb-4">
+        {% csrf_token %}
+        {{ form.content }}
+        <br>
+        <p></p>
+        <button type="submit" class="btn btn-success btn-sm">Comment</button>
+    </form>
 </div>
 {% endblock %}

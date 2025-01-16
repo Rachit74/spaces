@@ -1,0 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
+
+* {
+    font-family: 'IBM Plex Sans', serif;
+}
+
+/* links class style */
+.small-link-danger {
+    font-size: 14px;
+    color: red;
+    text-decoration: none;
+}
+
+.small-link-danger:hover {
+    font-size: 16px;
+    text-decoration: underline;
+    transition: .5s;
+}
