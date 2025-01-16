@@ -86,3 +86,21 @@ def delete_account_view(request):
 
     print("User deleted")
     return redirect('login')
+
+# add user view
+def add_user(request, user_id):
+    user = request.user #current user
+    user_added = get_object_or_404(User, id=user_id)
+
+    user.profile.follows.add(user_added.profile)
+
+    return redirect('search')
+
+# remove user view
+def remove_user(request, user_id):
+    user = request.user
+    user_removed = get_object_or_404(User, id=user_id)
+
+    user.profile.follows.remove(user_removed.profile)
+    
+    return redirect('search')

@@ -22,9 +22,9 @@
                     </div>
                     <div>
                         {% if user.profile in current_user.profile.follows.all %}
-                            <a href="" class="btn btn-danger btn-sm">Remove</a>
+                            <a href="{% url 'remove_user' user.id %}" class="btn btn-danger btn-sm">Remove</a>
                         {% else %}
-                            <a href="" class="btn btn-success btn-sm">Add</a>
+                            <a href="{% url 'add_user' user.id %}" class="btn btn-success btn-sm">Add</a>
                         {% endif %}
                     </div>
                 </li>
