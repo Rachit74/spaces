@@ -143,3 +143,19 @@ def delete_post(request, post_id):
     else:
         post.delete()
         return redirect('workspace_discussion', workspace_id=post.workspace.id)
+
+# search workspace view
+def search_workspace(request):
+    query = request.GET.get('query', '').strip()
+    workspaces = None
+
+    if query:
+        workspaces = Workspace.objects.filter(name__icontains=query)
+
+    context = {
+        'workspaces': workspaces,
+        'user': request.user,
+        'query': query,
+    }
+
+    return render(request, 'workspace/search_workspace.html', context=context)

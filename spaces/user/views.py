@@ -78,7 +78,13 @@ def user_search(request):
     if query:
         users = User.objects.filter(username__icontains=query).exclude(id=request.user.id)
 
-    return render(request, 'user/search_page.html', {'users': users, 'query': query, 'current_user': request.user})
+    context = {
+        'users': users,
+        'query': query,
+        'current_user': request.user
+    }
+
+    return render(request, 'user/search_page.html',context=context)
 
 def delete_account_view(request):
     user = request.user
