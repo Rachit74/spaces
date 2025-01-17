@@ -18,10 +18,10 @@
                             </div>
                             <div>
                                 <!-- Approve Button -->
-                                <a href="{% url 'approve_join' workspace_id request.id %}" class="btn btn-success btn-sm" disabled>Approve</a>
+                                <a href="{% url 'approve-join' workspace_id request.id %}" class="btn btn-success btn-sm" disabled>Approve</a>
                                 
                                 <!-- Reject Button -->
-                                <a href="#" class="btn btn-danger btn-sm" disabled>Reject</a>
+                                <a href="{% url 'reject-join' workspace_id request.id %}" class="btn btn-danger btn-sm" disabled>Reject</a>
                             </div>
                         </div>
                     {% endfor %}
@@ -36,7 +36,7 @@
             <div class="p-3 bg-light border rounded">
                 <h5>Workspace Links</h5>
                 <ul class="list-unstyled">
-                    <li><a href="{% url 'workspace_view' workspace_id %}" class="d-block mb-2">Back to Workspace Home</a></li>
+                    <li><a href="{% url 'workspace' workspace_id %}" class="d-block mb-2">Back to Workspace Home</a></li>
                     <li><a href="#" class="d-block mb-2">Workspace ToDo</a></li>
                     <li><a href="#" class="d-block mb-2">Workspace Members</a></li>
                 </ul>

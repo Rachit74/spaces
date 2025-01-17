@@ -11,7 +11,7 @@
 
     <div class="mt-4">
         <h5>Members</h5>
-        <a href="{% url 'joining_requests' workspace.id %}">Joining Requests</a>
+        <a href="{% url 'joining-requests' workspace.id %}">Joining Requests</a>
         <ul class="list-group">
             {% for member in workspace.members.all %}
                 <li class="list-group-item">{{ member.username }}</li>

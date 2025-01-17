@@ -8,7 +8,7 @@
         <!-- Welcome Section for Authenticated Users -->
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h2 class="mb-0">Welcome, {{ user.username }}!</h2>
-            <a href="{% url 'create_workspace' %}" class="btn btn-primary btn-sm">Create Workspace</a>
+            <a href="{% url 'create-workspace' %}" class="btn btn-primary btn-sm">Create Workspace</a>
         </div>
 
         <!-- User's Workspaces Section -->
@@ -21,7 +21,7 @@
                                 <h5 class="card-title">{{ workspace.name }}</h5>
                                 <p class="card-text text-muted small">{{ workspace.description|default:"No description available." }}</p>
                                 <p class="text-muted small">Created by: <strong>{{ workspace.creator }}</strong></p>
-                                <a href="{% url 'workspace_view' workspace.id %}" class="btn btn-outline-primary btn-sm">View Workspace</a>
+                                <a href="{% url 'workspace' workspace.id %}" class="btn btn-outline-primary btn-sm">View Workspace</a>
                             </div>
                         </div>
                     </div>
@@ -35,7 +35,7 @@
         
         <!-- Additional Actions for Authenticated Users -->
         <div class="text-center mt-4">
-            <a href="{% url 'search_workspace' %}" class="btn btn-success btn-lg mx-2 mb-3 btn-sm">
+            <a href="{% url 'search-workspace' %}" class="btn btn-success btn-lg mx-2 mb-3 btn-sm">
                 <i class="fas fa-users"></i> Join a Workspace
             </a>
             <a href="{% url 'search' %}" class="btn btn-warning btn-lg mx-2 mb-3 btn-sm">

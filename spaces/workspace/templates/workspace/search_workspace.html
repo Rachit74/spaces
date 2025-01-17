@@ -27,7 +27,7 @@
                                 {% elif workspace.creator == user %}
                                     <a href="" class="btn btn-danger btn-sm">Delete</a>
                                 {% else %}
-                                    <a href="{% url 'send_workspace_request' workspace.id %}" class="btn btn-success btn-sm">Request to Join</a>
+                                    <a href="{% url 'send-workspace-request' workspace.id %}" class="btn btn-success btn-sm">Request to Join</a>
                                 {% endif %}
                             </div>
                         </div>

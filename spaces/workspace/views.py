@@ -11,8 +11,11 @@ from .models import Workspace, WorkspaceRequest
 from discussion.models import Post, Comment
 from discussion.forms import PostCreationForm, CommentCreationForm
 
+def index(request):
+    return redirect('home')
+
 # Create your views here.
-def workspace_home(request):
+def home(request):
     if request.user.is_authenticated:
         user_workspaces = Workspace.objects.filter(Q(creator=request.user) | Q(members=request.user))
     else:
@@ -35,7 +38,7 @@ def create_workspace(request):
             # Save many-to-many relationships
             form.save_m2m()
 
-            return redirect('workspace_home')  # Redirect to workspace home
+            return redirect('home')  # Redirect to workspace home
     else:
         form = WorkspaceCreationForm(user=request.user)  # Pass user explicitly
 
@@ -109,7 +112,7 @@ def send_workspace_request(request, workspace_id):
     workspace_request.save()
 
     messages.success(request, 'Your request was sent!')
-    return redirect('search_workspace')
+    return redirect('search-workspace')
     
 
 # workspace request page
@@ -137,7 +140,7 @@ def approve_join(request, workspace_id, request_id):
     request_.delete()
 
     messages.success(request, f"{request_.user} is now a member of your workspace")
-    return redirect('joining_requests', workspace_id=workspace_id)
+    return redirect('joining-requests', workspace_id=workspace_id)
     
 # Workspace request approve
 def reject_join(request, workspace_id, request_id):
@@ -148,5 +151,5 @@ def reject_join(request, workspace_id, request_id):
     workspace.save()
 
     request_.delete()
-    messages.error(request, f"{request_.user} is no longer member of your workspace")
-    return redirect('joining_requests', workspace_id=workspace_id)
+    messages.warning(request, f"{request_.user} was rejected to join the workspace")
+    return redirect('joining-requests', workspace_id=workspace_id)

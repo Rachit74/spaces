@@ -22,7 +22,7 @@ def user_register_view(request):
             profile = Profile.objects.create(user=user)
             profile.save()
             login(request, user)
-            return redirect('workspace_home')
+            return redirect('workspace')
     else:
         form = UserRegistrationForm
     
@@ -43,7 +43,7 @@ def user_login_view(request):
             if user is not None:
                 login(request, user)
                 print("User Logged in")
-                return redirect('workspace_home')
+                return redirect('home')
     else:
         form = UserLoginForm
 

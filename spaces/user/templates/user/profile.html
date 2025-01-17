@@ -45,9 +45,9 @@
                                     <p class="card-text">{{ workspace.description }}</p>
                                     <span class="text-muted">{{ workspace.members.count }} members</span>
                                     <div class="mt-2">
-                                        <a href="{% url 'workspace_view' workspace.id %}" class="btn btn-primary btn-sm">View</a>
+                                        <a href="{% url 'workspace' workspace.id %}" class="btn btn-primary btn-sm">View</a>
                                         {% if workspace.creator == user %}
-                                            <a href="{% url 'delete_workspace' workspace.id %}" class="btn btn-danger btn-sm">Delete</a>
+                                            <a href="{% url 'delete-workspace' workspace.id %}" class="btn btn-danger btn-sm">Delete</a>
                                         {% endif %}
                                     </div>
                                 </div>
@@ -72,9 +72,9 @@
                                     <p class="card-text">{{ workspace.description }}</p>
                                     <span class="text-muted">{{ workspace.members.count }} members</span>
                                     <div class="mt-2">
-                                        <a href="{% url 'workspace_view' workspace.id %}" class="btn btn-primary btn-sm">View</a>
+                                        <a href="{% url 'workspace' workspace.id %}" class="btn btn-primary btn-sm">View</a>
                                         {% if workspace.creator == user %}
-                                            <a href="{% url 'delete_workspace' workspace.id %}" class="btn btn-danger btn-sm">Delete</a>
+                                            <a href="{% url 'delete-workspace' workspace.id %}" class="btn btn-danger btn-sm">Delete</a>
                                         {% endif %}
                                     </div>
                                 </div>
