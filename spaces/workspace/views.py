@@ -5,8 +5,11 @@ from django.contrib import messages
 from django.db.models import Q
 
 
-from .forms import WorkspaceCreationForm, PostCreationForm, CommentCreationForm
-from .models import Workspace, Post, Comment, WorkspaceRequest
+from .forms import WorkspaceCreationForm
+from .models import Workspace, WorkspaceRequest
+
+from discussion.models import Post, Comment
+from discussion.forms import PostCreationForm, CommentCreationForm
 
 # Create your views here.
 def workspace_home(request):
@@ -70,80 +73,12 @@ def workspace_view(request, workspace_id):
         return HttpResponseForbidden("You are not authorized to view this workspace.")
     
 
-def workspace_discussion(request, workspace_id):
-    workspace = get_object_or_404(Workspace, id=workspace_id)
-    posts = Post.objects.filter(workspace=workspace)
-
-    context = {
-        'workspace': workspace,
-        'posts': posts,
-    }
-
-    return render(request, 'workspace/discuss.html', context=context)
-
-
-def discussion_topic_form(request, workspace_id):
-    workspace = get_object_or_404(Workspace, id=workspace_id)
-    if request.method == "POST":
-        form = PostCreationForm(request.POST)
-        if form.is_valid():
-            post = form.save(commit=False)
-            post.workspace = workspace
-            post.author = request.user
-            post.save()
-            return redirect('workspace_discussion', workspace_id=workspace_id)
-
-    else:
-        form = PostCreationForm()
-        context = {
-            'workspace': workspace,
-            'form': form
-        }
-
-        return render(request, 'workspace/topic_form.html', context=context)
-    
-def post_view(request, post_id):
-    post = get_object_or_404(Post, id=post_id)
-
-    if request.method == "POST":
-        form = CommentCreationForm(request.POST)
-        if form.is_valid():
-            comment = form.save(commit=False)
-            comment.author = request.user
-            comment.post = post
-            comment.save()
-            return redirect('post', post_id=post_id)
-    else:
-        form = CommentCreationForm()
-        comments = Comment.objects.filter(post=post)
-
-    context = {
-        'form': form,
-        'post': post,
-        'comments': comments,
-    }
-
-    return render(request, 'workspace/post.html', context=context)
 
 # Delete comment view
-def delete_comment(request, comment_id):
-    comment = get_object_or_404(Comment, id=comment_id)
 
-    if not request.user == comment.author:
-        return HttpResponseForbidden("Forbidden")
-    else:
-        comment.delete()
-        return redirect('post', post_id=comment.post.id)
     
 # Delete post view
-def delete_post(request, post_id):
-    post = get_object_or_404(Post, id=post_id)
 
-    if not request.user == post.author:
-        return HttpResponseForbidden("Forbidden")
-    else:
-        post.delete()
-        return redirect('workspace_discussion', workspace_id=post.workspace.id)
 
 # search workspace view
 def search_workspace(request):

@@ -10,7 +10,7 @@
             <!-- Workspace Title and New Topic Button -->
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <h3 class="mb-0">{{ workspace.name }} Discussion</h3>
-                <a href="{% url 'topic_form' workspace.id %}" class="btn btn-primary btn-sm">New Topic</a>
+                <a href="{% url 'discussion-topic-form' workspace.id %}" class="btn btn-primary btn-sm">New Topic</a>
             </div>
             <hr>
 
@@ -18,7 +18,7 @@
             <div class="list-group">
                 {% for post in posts %}
                     <div class="list-group-item list-group-item-action mb-3 p-3 bg-white border rounded shadow-sm">
-                        <a href="{% url 'post' post.id %}" class="text-dark">
+                        <a href="{% url 'topic-post' post.id %}" class="text-dark">
                             <h5 class="mb-2">{{ post.title }}</h5>
                         </a>
                         <p class="mb-2 text-muted small">
