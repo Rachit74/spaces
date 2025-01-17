@@ -1,11 +1,12 @@
 from django.shortcuts import render, HttpResponse, redirect, get_object_or_404
 from django.http import HttpResponseForbidden
+from django.contrib import messages
 
 from django.db.models import Q
 
 
 from .forms import WorkspaceCreationForm, PostCreationForm, CommentCreationForm
-from .models import Workspace, Post, Comment
+from .models import Workspace, Post, Comment, WorkspaceRequest
 
 # Create your views here.
 def workspace_home(request):
@@ -159,3 +160,58 @@ def search_workspace(request):
     }
 
     return render(request, 'workspace/search_workspace.html', context=context)
+
+
+# Send reuqest view
+"""
+create a new WorkspaceRequest entry
+"""
+def send_workspace_request(request, workspace_id):
+    user = request.user
+    workspace = get_object_or_404(Workspace, id=workspace_id)
+
+    workspace_request = WorkspaceRequest(user=user, workspace=workspace)
+    workspace_request.save()
+
+    messages.success(request, 'Your request was sent!')
+    return redirect('search_workspace')
+    
+
+# workspace request page
+def joining_requests(request, workspace_id):
+    workspace = get_object_or_404(Workspace, id=workspace_id)
+
+    joining_requests = WorkspaceRequest.objects.filter(workspace=workspace)
+
+    context = {
+        'joining_requests': joining_requests,
+        'workspace_id': workspace_id,
+    }
+
+    return render(request, 'workspace/joining_requests.html', context=context)
+
+
+# Workspace request approve
+def approve_join(request, workspace_id, request_id):
+    workspace = get_object_or_404(Workspace, id=workspace_id)
+    request_ = get_object_or_404(WorkspaceRequest, id=request_id)
+
+    workspace.members.add(request_.user)
+    workspace.save()
+
+    request_.delete()
+
+    messages.success(request, f"{request_.user} is now a member of your workspace")
+    return redirect('joining_requests', workspace_id=workspace_id)
+    
+# Workspace request approve
+def reject_join(request, workspace_id, request_id):
+    workspace = get_object_or_404(Workspace, id=workspace_id)
+    request_ = get_object_or_404(WorkspaceRequest, id=request_id)
+
+    workspace.members.remove(request_.user)
+    workspace.save()
+
+    request_.delete()
+    messages.error(request, f"{request_.user} is no longer member of your workspace")
+    return redirect('joining_requests', workspace_id=workspace_id)
