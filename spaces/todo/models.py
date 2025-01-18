@@ -8,6 +8,6 @@ from workspace.models import Workspace
 class Todo(models.Model):
     task = models.CharField(max_length=100, null=False, blank=False)
     description = models.TextField(max_length=500, null=False, blank=False)
-    complected = models.BooleanField(default=False)
+    status = models.BooleanField(default=False)
     creator = models.ForeignKey(User, on_delete=models.CASCADE)
     workspace = models.ForeignKey(Workspace, on_delete=models.CASCADE)

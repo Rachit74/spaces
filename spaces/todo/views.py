@@ -43,3 +43,21 @@ def todo_creation(request, workspace_id):
     }
 
     return render(request, 'todo/todo_form.html', context)
+
+# todo mark view
+def todo_update_status(request, todo_id):
+    todo = get_object_or_404(Todo, id=todo_id)
+
+    current_status = todo.status
+    workspace = todo.workspace
+
+    if current_status == True:
+        todo.status = False
+        todo.save()
+    elif current_status == False:
+        todo.status = True
+        todo.save()
+
+
+    messages.success(request, "Todo status updated")
+    return redirect('workspace-todo', workspace_id=workspace.id)

@@ -22,7 +22,7 @@
                                     <p class="card-text">{{ todo.description }}</p>
                                     <p class="text-muted small mb-1">Created by: {{ todo.creator.username }}</p>
                                     <p class="text-muted small mb-2">Status: 
-                                        {% if todo.completed %}
+                                        {% if todo.status %}
                                             <span class="badge bg-success">Done</span>
                                         {% else %}
                                             <span class="badge bg-danger">Pending</span>
@@ -30,8 +30,8 @@
                                     </p>
                                     <div class="d-flex justify-content-between">
                                         <a href="" class="btn btn-sm btn-outline-secondary">Edit</a>
-                                        <a href="" class="btn btn-sm btn-outline-success">
-                                            {% if todo.completed %} Mark as Pending {% else %} Mark as Done {% endif %}
+                                        <a href="{% url 'todo-update-status' todo.id %}" class="btn btn-sm btn-outline-success">
+                                            {% if todo.status %} Mark as Pending {% else %} Mark as Done {% endif %}
                                         </a>
                                     </div>
                                 </div>
