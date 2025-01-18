@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from .forms import UserRegistrationForm, UserLoginForm
 from django.contrib.auth import login, authenticate, logout
+from django.contrib import messages
 
 from workspace.models import Workspace
 from .models import Profile
@@ -42,7 +43,10 @@ def user_login_view(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                print("User Logged in")
+                messages.success(request, "You have been logged in!")
+                next_url = request.GET.get('next')
+                if next_url:
+                    return redirect(next_url)
                 return redirect('home')
     else:
         form = UserLoginForm

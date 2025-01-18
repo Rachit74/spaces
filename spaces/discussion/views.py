@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseForbidden
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 # imports from external apps
 from workspace.models import Workspace
@@ -15,6 +16,7 @@ from .forms import PostCreationForm, CommentCreationForm
 view for workspace discussion home page
 all the topics for dicussion will show up in a list on this page
 """
+@login_required
 def workspace_discussion(request, workspace_id):
     workspace = get_object_or_404(Workspace, id=workspace_id)
     posts = Post.objects.filter(workspace=workspace)
@@ -29,6 +31,7 @@ def workspace_discussion(request, workspace_id):
 """
 view for topic creation form
 """
+@login_required
 def discussion_topic_form(request, workspace_id):
     workspace = get_object_or_404(Workspace, id=workspace_id)
     if request.method == "POST":
@@ -54,6 +57,7 @@ def discussion_topic_form(request, workspace_id):
 """
 particular post view
 """
+@login_required
 def topic_post(request, post_id):
     post = get_object_or_404(Post, id=post_id)
 
@@ -79,6 +83,7 @@ def topic_post(request, post_id):
     return render(request, 'discussion/post.html', context=context)
 
 # Delete Topic Post
+@login_required
 def delete_post(request, post_id):
     post = get_object_or_404(Post, id=post_id)
 
@@ -89,6 +94,7 @@ def delete_post(request, post_id):
         return redirect('workspace-discussion-index', workspace_id=post.workspace.id)
 
 # Delete comment
+@login_required
 def delete_comment(request, comment_id):
     comment = get_object_or_404(Comment, id=comment_id)
 

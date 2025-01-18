@@ -8,8 +8,6 @@ from django.db.models import Q
 from .forms import WorkspaceCreationForm
 from .models import Workspace, WorkspaceRequest
 
-from discussion.models import Post, Comment
-from discussion.forms import PostCreationForm, CommentCreationForm
 
 def index(request):
     return redirect('home')
