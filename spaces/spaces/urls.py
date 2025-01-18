@@ -23,5 +23,6 @@ urlpatterns = [
     path('user/', include('user.urls')),
     path('workspace/', include('workspace.urls')),
     path('workspace/discussion/', include('discussion.urls')),
+    path('workspace/todo/', include('todo.urls')),
     path('admin/', admin.site.urls),
 ]

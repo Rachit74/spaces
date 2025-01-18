@@ -2,38 +2,43 @@
 
 {% block content %}
 <div class="container mt-4">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1>{{ workspace.name }}</h1>
-        <a href="{% url 'workspace-discussion-index' workspace.id %}" class="btn btn-primary btn-sm">Workspace Discussion</a>
-    </div>
-    <p class="text-muted">{{ workspace.description|default:"No description available." }}</p>
-    <p><strong>Created by:</strong> {{ workspace.creator.username }}</p>
+    <div class="row">
+        <!-- Main Content: Workspace Details -->
+        <div class="col-md-8">
+            <h1>{{ workspace.name }}</h1>
+            <p class="text-muted">{{ workspace.description|default:"No description available." }}</p>
+            <p><strong>Created by:</strong> {{ workspace.creator.username }}</p>
 
-    <div class="mt-4">
-        <h5>Members</h5>
-        <a href="{% url 'joining-requests' workspace.id %}">Joining Requests</a>
-        <ul class="list-group">
-            {% for member in workspace.members.all %}
-                <li class="list-group-item">{{ member.username }}</li>
-            {% empty %}
-                <li class="list-group-item text-muted">No members</li>
-            {% endfor %}
-        </ul>
-    </div>
+            <div class="mt-4">
+                <h5>Members</h5>
+                <a href="{% url 'joining-requests' workspace.id %}" class="btn btn-link p-0">Joining Requests</a>
+                <ul class="list-group mt-2">
+                    {% for member in workspace.members.all %}
+                        <li class="list-group-item">{{ member.username }}</li>
+                    {% empty %}
+                        <li class="list-group-item text-muted">No members</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
 
-    <div class="mt-4">
-        <h5>Quick Links</h5>
-        <ul class="list-group">
-            <li class="list-group-item">
-                <a href="" class="text-decoration-none">Workspace ToDo</a>
-            </li>
-            <li class="list-group-item">
-                <a href="" class="text-decoration-none">Workspace Members</a>
-            </li>
-            <li class="list-group-item">
-                <a href="" class="text-decoration-none">Workspace Discussion</a>
-            </li>
-        </ul>
+        <!-- Right-hand Sidebar -->
+        <div class="col-md-4">
+            <div class="p-3 bg-light border rounded">
+                <h5>Quick Links</h5>
+                <ul class="list-unstyled mt-3">
+                    <li class="mb-2">
+                        <a href="{% url 'workspace-todo' workspace.id %}" class="text-decoration-none">Workspace ToDo</a>
+                    </li>
+                    <li class="mb-2">
+                        <a href="" class="text-decoration-none">Workspace Members</a>
+                    </li>
+                    <li class="mb-2">
+                        <a href="{% url 'workspace-discussion-index' workspace.id %}" class="text-decoration-none">Workspace Discussion</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}

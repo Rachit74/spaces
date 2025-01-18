@@ -1,0 +1,31 @@
+{% extends 'user/base.html' %}
+
+{% block title %} Todo Form {% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card shadow-lg">
+        <div class="card-header bg-dark text-white text-center">
+            <h4 class="mb-0">Create a New Todo Item</h4>
+        </div>
+        <div class="card-body">
+            <form action="" method="post">
+                {% csrf_token %}
+                <!-- <div class="mb-4">
+                    <label for="id_title" class="form-label">{{ form.title.label }}</label>
+                    <input type="text" name="title" id="id_title" class="form-control" placeholder="Enter the todo title" value="{{ form.title.value|default_if_none:'' }}">
+                </div>
+                <div class="mb-4">
+                    <label for="id_description" class="form-label">{{ form.description.label }}</label>
+                    <textarea name="description" id="id_description" class="form-control" placeholder="Enter the todo description">{{ form.description.value|default_if_none:'' }}</textarea>
+                </div> -->
+                {{ form }}
+                <div class="text-end">
+                    <button type="submit" class="btn btn-success btn-sm me-2">Submit</button>
+                    <a href="{% url 'workspace-todo' workspace.id %}" class="btn btn-outline-secondary btn-sm">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
