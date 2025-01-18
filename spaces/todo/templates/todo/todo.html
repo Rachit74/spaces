@@ -29,10 +29,14 @@
                                         {% endif %}
                                     </p>
                                     <div class="d-flex justify-content-between">
-                                        <a href="" class="btn btn-sm btn-outline-secondary">Edit</a>
                                         <a href="{% url 'todo-update-status' todo.id %}" class="btn btn-sm btn-outline-success">
                                             {% if todo.status %} Mark as Pending {% else %} Mark as Done {% endif %}
                                         </a>
+                                        {% if request.user == todo.creator %}
+                                        <a href="{% url 'delete-todo' todo.id %}" class="btn btn-sm btn-outline-danger" onclick="return confirm('Are you sure you want to delete this todo?');">
+                                            Delete
+                                        </a>
+                                        {% endif %}
                                     </div>
                                 </div>
                             </div>

@@ -44,7 +44,7 @@ def todo_creation(request, workspace_id):
 
     return render(request, 'todo/todo_form.html', context)
 
-# todo mark view
+# todo update status view
 def todo_update_status(request, todo_id):
     todo = get_object_or_404(Todo, id=todo_id)
 
@@ -60,4 +60,17 @@ def todo_update_status(request, todo_id):
 
 
     messages.success(request, "Todo status updated")
+    return redirect('workspace-todo', workspace_id=workspace.id)
+
+# todo delete view
+def delete_todo(request, todo_id):
+    todo = get_object_or_404(Todo, id=todo_id)
+    workspace = todo.workspace
+
+    if request.user != todo.creator:
+        messages.warning(request, "You can not delete this todo")
+        return redirect('workspace-todo', workspace_id=workspace.id)
+    
+    todo.delete()
+    messages.warning(request, f"Todo was delete")
     return redirect('workspace-todo', workspace_id=workspace.id)
