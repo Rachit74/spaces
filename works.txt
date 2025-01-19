@@ -1,0 +1,8 @@
+- Minor tweaks (fix dead links and review code)
+- restrict workspace access
+- link todo with discussion
+- github login
+- github repo link with workspace
+- github repo commit tracking with workspaces
+- graphs and data charts based on github repo activity
+- personal performace stats on user profile

@@ -53,9 +53,9 @@
             <div class="p-3 bg-light border rounded">
                 <h5>Workspace Links</h5>
                 <ul class="list-unstyled">
-                    <li><a href="{% url 'workspace-discussion-index' post.workspace.id %}" class="d-block mb-2">Back to Workspace Home</a></li>
-                    <li><a href="#" class="d-block mb-2">Workspace ToDo</a></li>
-                    <li><a href="#" class="d-block mb-2">Workspace Members</a></li>
+                    <li><a href="{% url 'workspace-discussion-index' post.workspace.id %}" class="d-block mb-2">Workspace Home</a></li>
+                    <li><a href="{% url  'workspace-todo' post.workspace.id %}" class="d-block mb-2">Workspace ToDo</a></li>
+                    <li><a href="{% url 'workspace-discussion-index' post.workspace.id %}" class="d-block mb-2">Workspace Discussion</a></li>
                 </ul>
             </div>
         </div>
