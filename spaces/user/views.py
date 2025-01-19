@@ -23,7 +23,8 @@ def user_register_view(request):
             profile = Profile.objects.create(user=user)
             profile.save()
             login(request, user)
-            return redirect('workspace')
+            messages.success(request, "Your account was created!")
+            return redirect('home')
     else:
         form = UserRegistrationForm
     

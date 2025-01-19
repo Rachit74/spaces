@@ -1,12 +1,14 @@
 from django.shortcuts import render, HttpResponse, redirect, get_object_or_404
 from django.http import HttpResponseForbidden
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 from django.db.models import Q
 
 
 from .forms import WorkspaceCreationForm
 from .models import Workspace, WorkspaceRequest
+from .decorators import user_membership_check
 
 
 def index(request):
@@ -24,7 +26,7 @@ def home(request):
     }
     return render(request, 'workspace/index.html', context=context)
 
-
+@login_required
 def create_workspace(request):
     if request.method == 'POST':
         form = WorkspaceCreationForm(request.POST, user=request.user)  # Pass user explicitly
@@ -45,7 +47,8 @@ def create_workspace(request):
     }
     return render(request, 'workspace/create.html', context=context)
 
-
+@login_required
+@user_membership_check
 def delete_workspace(request, workspace_id):
     workspace = get_object_or_404(Workspace, id=workspace_id)
     user = request.user
@@ -59,6 +62,8 @@ def delete_workspace(request, workspace_id):
 
     return redirect('profile')
 
+@login_required
+@user_membership_check
 def workspace_view(request, workspace_id):
     workspace = get_object_or_404(Workspace, id=workspace_id)
     user = request.user
@@ -72,14 +77,6 @@ def workspace_view(request, workspace_id):
     else:
         # Forbid outsiders to visit the workspace
         return HttpResponseForbidden("You are not authorized to view this workspace.")
-    
-
-
-# Delete comment view
-
-    
-# Delete post view
-
 
 # search workspace view
 def search_workspace(request):
@@ -114,6 +111,8 @@ def send_workspace_request(request, workspace_id):
     
 
 # workspace request page
+@login_required
+@user_membership_check
 def joining_requests(request, workspace_id):
     workspace = get_object_or_404(Workspace, id=workspace_id)
 

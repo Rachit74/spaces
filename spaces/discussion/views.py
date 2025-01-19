@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 
 # imports from external apps
 from workspace.models import Workspace
+from workspace.decorators import user_membership_check
 
 # imports from self app
 from .models import Post, Comment
@@ -17,6 +18,7 @@ view for workspace discussion home page
 all the topics for dicussion will show up in a list on this page
 """
 @login_required
+@user_membership_check
 def workspace_discussion(request, workspace_id):
     workspace = get_object_or_404(Workspace, id=workspace_id)
     posts = Post.objects.filter(workspace=workspace)
@@ -32,6 +34,7 @@ def workspace_discussion(request, workspace_id):
 view for topic creation form
 """
 @login_required
+@user_membership_check
 def discussion_topic_form(request, workspace_id):
     workspace = get_object_or_404(Workspace, id=workspace_id)
     if request.method == "POST":
@@ -58,6 +61,7 @@ def discussion_topic_form(request, workspace_id):
 particular post view
 """
 @login_required
+@user_membership_check
 def topic_post(request, post_id):
     post = get_object_or_404(Post, id=post_id)
 
@@ -84,6 +88,7 @@ def topic_post(request, post_id):
 
 # Delete Topic Post
 @login_required
+@user_membership_check
 def delete_post(request, post_id):
     post = get_object_or_404(Post, id=post_id)
 
@@ -95,6 +100,7 @@ def delete_post(request, post_id):
 
 # Delete comment
 @login_required
+@user_membership_check
 def delete_comment(request, comment_id):
     comment = get_object_or_404(Comment, id=comment_id)
 

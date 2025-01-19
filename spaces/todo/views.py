@@ -6,9 +6,11 @@ from .models import Todo
 from .forms import TodoCreationForm
 
 from workspace.models import Workspace
+from workspace.decorators import user_membership_check
 
 # Create your views here.
 @login_required
+@user_membership_check
 def workspace_todo(request, workspace_id):
     workspace = get_object_or_404(Workspace, id=workspace_id)
     todos = Todo.objects.filter(workspace=workspace)
@@ -21,6 +23,7 @@ def workspace_todo(request, workspace_id):
     return render(request, 'todo/todo.html', context=context)
 
 @login_required
+@user_membership_check
 def todo_creation(request, workspace_id):
     workspace = get_object_or_404(Workspace, id=workspace_id)
 
@@ -45,6 +48,8 @@ def todo_creation(request, workspace_id):
     return render(request, 'todo/todo_form.html', context)
 
 # todo update status view
+@login_required
+@user_membership_check
 def todo_update_status(request, todo_id):
     todo = get_object_or_404(Todo, id=todo_id)
 
@@ -63,6 +68,8 @@ def todo_update_status(request, todo_id):
     return redirect('workspace-todo', workspace_id=workspace.id)
 
 # todo delete view
+@login_required
+@user_membership_check
 def delete_todo(request, todo_id):
     todo = get_object_or_404(Todo, id=todo_id)
     workspace = todo.workspace
