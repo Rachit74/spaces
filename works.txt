@@ -1,5 +1,5 @@
 - Minor tweaks (fix dead links and review code)
-- restrict workspace access
+- restrict workspace access [DONE]
 - link todo with discussion
 - github login
 - github repo link with workspace

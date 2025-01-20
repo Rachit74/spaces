@@ -49,7 +49,6 @@ def todo_creation(request, workspace_id):
 
 # todo update status view
 @login_required
-@user_membership_check
 def todo_update_status(request, todo_id):
     todo = get_object_or_404(Todo, id=todo_id)
 
@@ -69,7 +68,6 @@ def todo_update_status(request, todo_id):
 
 # todo delete view
 @login_required
-@user_membership_check
 def delete_todo(request, todo_id):
     todo = get_object_or_404(Todo, id=todo_id)
     workspace = todo.workspace
