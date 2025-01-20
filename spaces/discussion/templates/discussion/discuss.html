@@ -12,12 +12,11 @@
                 <h3 class="mb-0">{{ workspace.name }} Discussion</h3>
                 <a href="{% url 'discussion-topic-form' workspace.id %}" class="btn btn-primary btn-sm">New Topic</a>
             </div>
-            <hr>
 
             <!-- Posts Section -->
             <div class="list-group">
                 {% for post in posts %}
-                    <div class="list-group-item list-group-item-action mb-3 p-3 bg-white border rounded shadow-sm">
+                    <div class="list-group-item p-3 mb-3">
                         <a href="{% url 'topic-post' post.id %}" class="text-dark">
                             <h5 class="mb-2">{{ post.title }}</h5>
                         </a>
@@ -26,15 +25,18 @@
                             <strong>Posted on:</strong> {{ post.created_at|date:"d M Y, H:i" }}
                         </p>
                         <p class="mb-1">{{ post.content }}</p>
-                        <hr>
                         {% if post.todo %}
-                        <a href="{% url 'todo-single' post.todo.id %}">Discussion has been linked with a Todo Task</a>
+                            <div class="mt-3">
+                                <a href="{% url 'todo-single' post.todo.id %}" class="text-info">Linked Todo Task</a>
+                            </div>
                         {% else %}
-                        No link with any Todo Task
+                            <div class="mt-3 text-muted small">
+                                No linked Todo Task.
+                            </div>
                         {% endif %}
                     </div>
                 {% empty %}
-                    <div class="alert alert-warning text-center" role="alert">
+                    <div class="alert alert-light text-center" role="alert">
                         No posts available. Be the first to start a discussion!
                     </div>
                 {% endfor %}
@@ -43,15 +45,14 @@
 
         <!-- Right Column: Workspace Links -->
         <div class="col-md-4">
-            <div class="p-3 bg-light border rounded shadow-sm">
-                <h5 class="mb-3">Workspace Links</h5>
+            <div class="p-3 bg-light rounded">
+                <h5>Workspace Links</h5>
                 <ul class="list-unstyled">
                     <li><a href="{% url 'workspace' workspace.id %}" class="d-block mb-2">Workspace Home</a></li>
                     <li><a href="{% url 'workspace-todo' workspace.id %}" class="d-block mb-2">Workspace Todo</a></li>
                 </ul>
             </div>
         </div>
-
     </div>
 </div>
 {% endblock %}
