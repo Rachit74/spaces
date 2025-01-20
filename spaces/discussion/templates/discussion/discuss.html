@@ -26,6 +26,12 @@
                             <strong>Posted on:</strong> {{ post.created_at|date:"d M Y, H:i" }}
                         </p>
                         <p class="mb-1">{{ post.content }}</p>
+                        <hr>
+                        {% if post.todo %}
+                        <a href="{% url 'todo-single' post.todo.id %}">Discussion has been linked with a Todo Task</a>
+                        {% else %}
+                        No link with any Todo Task
+                        {% endif %}
                     </div>
                 {% empty %}
                     <div class="alert alert-warning text-center" role="alert">

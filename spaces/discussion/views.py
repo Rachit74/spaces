@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 # imports from external apps
 from workspace.models import Workspace
 from workspace.decorators import user_membership_check
+from todo.models import Todo
 
 # imports from self app
 from .models import Post, Comment
@@ -35,14 +36,20 @@ view for topic creation form
 """
 @login_required
 @user_membership_check
-def discussion_topic_form(request, workspace_id):
+def discussion_topic_form(request, workspace_id, todo_id=None):
     workspace = get_object_or_404(Workspace, id=workspace_id)
+    todo = None
+    
+    if todo_id:
+        todo = get_object_or_404(Todo, id=todo_id)
+        
     if request.method == "POST":
         form = PostCreationForm(request.POST)
         if form.is_valid():
             post = form.save(commit=False)
             post.workspace = workspace
             post.author = request.user
+            post.todo = todo
             post.save()
 
             messages.success(request, "New topic created!")

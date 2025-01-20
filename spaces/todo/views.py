@@ -20,7 +20,7 @@ def workspace_todo(request, workspace_id):
         'workspace': workspace,
     }
 
-    return render(request, 'todo/todo.html', context=context)
+    return render(request, 'todo/todos.html', context=context)
 
 @login_required
 @user_membership_check
@@ -46,6 +46,17 @@ def todo_creation(request, workspace_id):
     }
 
     return render(request, 'todo/todo_form.html', context)
+
+@login_required
+def todo_single(request, todo_id):
+    todo = get_object_or_404(Todo, id=todo_id)
+
+    context = {
+        'todo': todo,
+        'user': request.user,
+    }
+
+    return render(request, 'todo/todo.html', context=context)
 
 # todo update status view
 @login_required

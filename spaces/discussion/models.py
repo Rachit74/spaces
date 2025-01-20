@@ -2,6 +2,8 @@ from django.db import models
 from workspace.models import Workspace
 from django.contrib.auth.models import User
 
+from todo.models import Todo
+
 # Create your models here.
 """
 Post and Comment Models for discussion in workspaces
@@ -19,6 +21,9 @@ class Post(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     # auto_now is changed whenever the recored is updated and saved again
     updated_at = models.DateTimeField(auto_now=True)
+
+    # Optional todo link (if a discussion is based on todo)
+    todo = models.OneToOneField(Todo, on_delete=models.DO_NOTHING, null=True, blank=True)
 
 
     def __str__(self):
