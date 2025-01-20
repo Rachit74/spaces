@@ -20,6 +20,24 @@
                     {% endfor %}
                 </ul>
             </div>
+
+            <div class="mt-5">
+                <h5>Recent Commits</h5>
+                {% if commits %}
+                    <div class="list-group">
+                        {% for commit in commits %}
+                            <div class="list-group-item p-3 mb-3 bg-light border rounded shadow-sm">
+                                <p class="mb-2"><strong>Message:</strong> {{ commit.message }}</p>
+                                <a href="{{ commit.html_url }}" class="btn btn-sm btn-outline-primary" target="_blank">View Commit</a>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="alert alert-info text-center" role="alert">
+                        No commits available yet.
+                    </div>
+                {% endif %}
+            </div>
         </div>
 
         <!-- Right-hand Sidebar -->

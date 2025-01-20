@@ -9,6 +9,7 @@ from django.db.models import Q
 from .forms import WorkspaceCreationForm
 from .models import Workspace, WorkspaceRequest
 from .decorators import user_membership_check
+from .fetcher import fetch_repository_commits
 
 
 def index(request):
@@ -67,11 +68,13 @@ def delete_workspace(request, workspace_id):
 def workspace_view(request, workspace_id):
     workspace = get_object_or_404(Workspace, id=workspace_id)
     user = request.user
+    commits = fetch_repository_commits(workspace.repository)
 
     # Allow the creator and members of the workspace to visit the workspace
     if user in workspace.members.all() or workspace.creator == user:
         context = {
             'workspace': workspace,
+            'commits': commits,
         }
         return render(request, 'workspace/workspace.html', context=context)
     else:

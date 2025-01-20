@@ -13,7 +13,7 @@ class WorkspaceCreationForm(forms.ModelForm):
 
     class Meta:
         model = Workspace
-        fields = ['name', 'description', 'members']
+        fields = ['name', 'description', 'members', 'repository']
         widgets = {
             'description': forms.Textarea(attrs={'rows': 3, 'cols': 40}),
         }

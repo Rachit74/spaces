@@ -10,6 +10,9 @@ class Workspace(models.Model):
     members = models.ManyToManyField(User, related_name='workspaces')
     created_at = models.DateTimeField(auto_now_add=True)
 
+    #optional github repo link
+    repository = models.URLField(null=True, blank=True)
+
     def __str__(self):
         return self.name
 
